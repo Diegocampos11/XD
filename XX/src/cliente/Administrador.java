@@ -25,18 +25,6 @@ public class Administrador {
 		SSLSocketFactory fabricaSSLSocket = ( SSLSocketFactory ) SSLSocketFactory.getDefault(); 
 		try {
 			SSLSocket sock = (SSLSocket) fabricaSSLSocket.createSocket( "127.0.0.1", Servidor.PUERTO );
-			//cliente conectado
-			//System.out.println("Me he conectado");			
-			/*SSLSession sesionSSL = sock.getSession();//coge la hora cuando se se obtiene la sesion SSL
-			System.out.println( "Host "+ sesionSSL.getPeerHost() );
-			System.out.println( "Cifrado "+ sesionSSL.getCipherSuite() );
-			System.out.println( "Protocolo "+ sesionSSL.getProtocol() );
-			System.out.println( "Id sesion "+ new BigInteger( sesionSSL.getId() ) );
-			System.out.println( "hora Sesion "+ sdf.format( new Date( sesionSSL.getCreationTime() ) ) );*/
-			/*DataInputStream entrada = new DataInputStream( sock.getInputStream() );
-			String saludo = entrada.readUTF();
-			System.out.println( saludo );
-			entrada.close();*/
 			Scanner s = new Scanner ( System.in );
 			System.out.println("Bienvenido administrador/a!!");//A continuación ingrese los datos de un espectaculo...");
 			DataOutputStream salida = new DataOutputStream( sock.getOutputStream() );
@@ -48,10 +36,10 @@ public class Administrador {
 				String fecha = "";
 				boolean fechaNoValida = true;
 				while ( fechaNoValida ) {
-					System.out.println("Ingrese la fecha y hora:");
+					System.out.println("Ingrese la fecha y hora ('aaaa-mm-dd hh:mm:ss', formato 24 horas sin comillas):");
 					fecha = s.nextLine();
 					try {
-						System.out.println( new Date( ( (java.util.Date) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse( fecha ) ).getTime() ) );
+						new Date( ( (java.util.Date) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse( fecha ) ).getTime() );
 						fechaNoValida = false;
 					} catch (ParseException e) {
 						System.out.println("Error, debe de ingresar el siguiente formato: 'aaaa-mm-dd hh:mm:ss' (24 horas sin comillas)");//año-mes-dia hora:minutos:segundos
@@ -75,5 +63,4 @@ public class Administrador {
 			e.printStackTrace();
 		}
 	}
-
 }
