@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -43,8 +44,20 @@ public class Administrador {
 			while ( continuar ) {
 				System.out.println("Nuevo espectaculo...\nIngrese el nombre:");
 				salida.writeUTF( s.nextLine() );
-				System.out.println("Ingrese la fecha:");
-				salida.writeUTF( s.nextLine() );
+				//
+				String fecha = "";
+				boolean fechaNoValida = true;
+				while ( fechaNoValida ) {
+					System.out.println("Ingrese la fecha y hora:");
+					fecha = s.nextLine();
+					try {
+						System.out.println( new Date( ( (java.util.Date) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse( fecha ) ).getTime() ) );
+						fechaNoValida = false;
+					} catch (ParseException e) {
+						System.out.println("Error, debe de ingresar el siguiente formato: 'aaaa-mm-dd hh:mm:ss' (24 horas sin comillas)");//año-mes-dia hora:minutos:segundos
+					}
+				}
+				salida.writeUTF( fecha );
 				System.out.println("Ingrese el precio de entrada:");
 				salida.writeUTF( s.nextLine() );
 				System.out.println("Ingrese el número de filas:");
